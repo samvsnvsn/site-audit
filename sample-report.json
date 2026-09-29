@@ -1,0 +1,158 @@
+{
+  "url": "https://example.com",
+  "final_url": "https://example.com",
+  "status": 200,
+  "response_ms": 172,
+  "page_bytes": 713,
+  "checks": [
+    {
+      "check": "site reachable",
+      "passed": true,
+      "detail": "HTTP 200 in 172 ms, 713 bytes"
+    },
+    {
+      "check": "https enforced",
+      "passed": false,
+      "detail": "http:// probe: HTTP 200, final=http://example.com"
+    },
+    {
+      "check": "robots.txt",
+      "passed": false,
+      "detail": "HTTP 404"
+    },
+    {
+      "check": "sitemap.xml",
+      "passed": false,
+      "detail": "HTTP 404"
+    },
+    {
+      "check": "favicon",
+      "passed": true,
+      "detail": "HTTP 404"
+    },
+    {
+      "check": "page title",
+      "passed": true,
+      "detail": "14 chars: 'Example Domain'"
+    },
+    {
+      "check": "meta description",
+      "passed": false,
+      "detail": "0 chars"
+    },
+    {
+      "check": "single H1",
+      "passed": false,
+      "detail": "0 H1 tags"
+    },
+    {
+      "check": "mobile viewport",
+      "passed": false,
+      "detail": "no viewport meta"
+    },
+    {
+      "check": "html lang",
+      "passed": false,
+      "detail": "lang attribute"
+    },
+    {
+      "check": "social preview (og:)",
+      "passed": false,
+      "detail": "no og: tags"
+    },
+    {
+      "check": "canonical link",
+      "passed": false,
+      "detail": "canonical"
+    },
+    {
+      "check": "structured data",
+      "passed": false,
+      "detail": "ld+json"
+    },
+    {
+      "check": "no mixed content",
+      "passed": true,
+      "detail": "0 http:// resources"
+    },
+    {
+      "check": "image alt text",
+      "passed": true,
+      "detail": "0/0 images missing alt"
+    },
+    {
+      "check": "page weight",
+      "passed": true,
+      "detail": "713 bytes"
+    },
+    {
+      "check": "response time",
+      "passed": true,
+      "detail": "172 ms"
+    }
+  ],
+  "issues": [
+    {
+      "check": "mobile viewport",
+      "severity": "high",
+      "finding": "no viewport meta",
+      "fix": "No <meta name=viewport> tag. On phones your site renders zoomed-out and Google ranks it lower."
+    },
+    {
+      "check": "https enforced",
+      "severity": "medium",
+      "finding": "http:// probe: HTTP 200, final=http://example.com",
+      "fix": "Visitors typing your domain without https get an error or an insecure page. Add a redirect from http:// to https:// on your host."
+    },
+    {
+      "check": "robots.txt",
+      "severity": "medium",
+      "finding": "HTTP 404",
+      "fix": "No robots.txt found. Search engines guess at crawl rules; add one that points to your sitemap."
+    },
+    {
+      "check": "sitemap.xml",
+      "severity": "medium",
+      "finding": "HTTP 404",
+      "fix": "No /sitemap.xml found. Add one so search engines index every page you have."
+    },
+    {
+      "check": "meta description",
+      "severity": "medium",
+      "finding": "0 chars",
+      "fix": "Missing or poorly-sized meta description (50-160 chars). Google often shows it under your title in results."
+    },
+    {
+      "check": "single H1",
+      "severity": "medium",
+      "finding": "0 H1 tags",
+      "fix": "Exactly one H1 is expected on the page; you have 0. Keep the main headline as the only H1."
+    },
+    {
+      "check": "html lang",
+      "severity": "low",
+      "finding": "lang attribute",
+      "fix": "Set <html lang=\"...\"> so screen readers and translators know the page language."
+    },
+    {
+      "check": "social preview (og:)",
+      "severity": "low",
+      "finding": "no og: tags",
+      "fix": "Add Open Graph tags so links shared on social apps show a title, description and image instead of a bare URL."
+    },
+    {
+      "check": "canonical link",
+      "severity": "low",
+      "finding": "canonical",
+      "fix": "Add <link rel=canonical> to avoid duplicate-page confusion in search engines."
+    },
+    {
+      "check": "structured data",
+      "severity": "low",
+      "finding": "ld+json",
+      "fix": "No schema.org JSON-LD found. Adding it can earn rich results (hours, ratings, breadcrumbs) in Google."
+    }
+  ],
+  "passed": 7,
+  "total_checks": 17
+}

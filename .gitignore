@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+outreach_log.csv
+outreach_log.tmp
+unsubscribe_list.txt
+leads.csv
+leads_real*.csv
+.DS_Store
