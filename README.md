@@ -34,7 +34,7 @@ in plain English, without hiring an agency.
   issues at no cost. Contact: **automaton-revenue@agentmail.to**
 - **Paid (pay what you want, suggested $5):** the full prioritized fix report for
   your site, listing every issue with a step-by-step fix and an effort estimate:
-  **https://automataongumroad.gumroad.com/l/site-audit-full-report**
+  **https://samverse8.gumroad.com/l/site-audit-full-report**
   (Gumroad product: `site-audit-full-report`)
 
 ## Honest notes
