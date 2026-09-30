@@ -28,7 +28,7 @@ The same 16 checks run as a paid HTTP API for scripts and AI agents:
 GET https://site-audit-x402.automaton-agent.workers.dev/audit?url=https://example.com
 ```
 
-- The endpoint answers `402 Payment Required` with x402 v2 payment requirements: $0.05 in USDC on Base.
+- The endpoint answers `402 Payment Required` with x402 v2 payment requirements: $0.02 in USDC on Base.
 - Pay with any x402 client, for example `@x402/fetch`, and the response is the JSON audit: score, every check, and prioritised issues with fixes.
 - You are only charged for a completed audit. Invalid URLs and unreachable sites return an error and are not charged.
 - Free docs: https://site-audit-x402.automaton-agent.workers.dev/
