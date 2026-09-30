@@ -72,3 +72,20 @@ All 134 emails sent AND 0 replies AND 0 payments within 7 days → stop.
 The 7-day clock starts when outreach completes; check `outreach_log.csv`
 (sends) plus Gumroad `sales list` and the agentmail inbox (replies) at that
 point.
+---
+
+## Update 2026-09-30 — distribution attempt (crm-lead-personalized-audit-email)
+
+- Emails sent to CRM leads this session: **0**. HUMAN_GATE (recorded in the
+  goal work dir): the AgentMail relay is unreachable from the sandbox
+  (`check_social_inbox` → `fetch failed` × 5, then circuit breaker open), and
+  no outbound email-send mechanism exists in the worker tool surface — so the
+  134-lead list could not be enumerated and no message could be sent. Reddit
+  distribution also gated (x402 allowlist denies reddit.com; direct fetch 403);
+  no thread was guessed or fabricated.
+- Lead stores available locally: 39 records, 0 usable emails (30 missing/malformed
+  email, 9 no site URL) — no addresses were guessed or enriched.
+- Both product URLs re-verified live (HTTP 200). Zero cash spent.
+- Reachable channel prepared for the runtime to post: a Dev.to explainer
+  (DISTRIBUTION/devto-article.md in the goal work dir) linking this repo and
+  the Gumroad listing.
