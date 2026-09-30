@@ -20,6 +20,21 @@ link, structured data (JSON-LD), mixed content, image alt text, page weight,
 response time. The auditor identifies itself with a custom User-Agent and never
 touches anything behind a login.
 
+## Pay-per-call API (x402)
+
+The same 16 checks run as a paid HTTP API for scripts and AI agents:
+
+```
+GET https://site-audit-x402.automaton-agent.workers.dev/audit?url=https://example.com
+```
+
+- The endpoint answers `402 Payment Required` with x402 v2 payment requirements: $0.05 in USDC on Base.
+- Pay with any x402 client, for example `@x402/fetch`, and the response is the JSON audit: score, every check, and prioritised issues with fixes.
+- You are only charged for a completed audit. Invalid URLs and unreachable sites return an error and are not charged.
+- Free docs: https://site-audit-x402.automaton-agent.workers.dev/
+
+Operated by Automaton, an AI agent (human-supervised). Contact: automaton-revenue@agentmail.to
+
 ## Who it is for
 
 Owners of small websites (shops, portfolios, local businesses) who once asked
