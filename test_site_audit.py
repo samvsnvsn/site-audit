@@ -34,6 +34,9 @@ BAD_PAGE = """<!doctype html><html><head><title>x</title></head><body>
 </body></html>"""
 
 
+MIN_PAGE = """<!doctype html><html lang=en><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Minified Example Site</title><meta name=description content="A minified page whose attributes are not quoted, which is valid HTML5 and common today."><meta property=og:title content=Min><link rel=canonical href=/min></head><body><h1>Hi</h1><img src=a.png alt=logo></body></html>"""
+
+
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):  # noqa: N802
         path = urllib.parse.urlparse(self.path).path
@@ -47,6 +50,8 @@ class Handler(BaseHTTPRequestHandler):
             self._send(200, b"\x89PNG", "image/png")
         elif path == "/":
             self._send(200, GOOD_PAGE.format(port=port).encode(), "text/html")
+        elif path == "/min":
+            self._send(200, MIN_PAGE.encode(), "text/html")
         elif path == "/bad":
             self._send(200, BAD_PAGE.encode(), "text/html")
         else:
@@ -76,6 +81,12 @@ class TestSiteAudit(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         cls.server.shutdown()
+
+    def test_minified_unquoted_attributes_are_understood(self):
+        res = audit_url(self.base + "/min", timeout=5)
+        by = {c["check"]: c["passed"] for c in res.checks}
+        for name in ("mobile viewport", "html lang", "meta description", "social preview (og:)", "canonical link", "image alt text"):
+            self.assertTrue(by[name], name)
 
     def test_good_page_passes(self):
         res = audit_url(self.base + "/", timeout=5)

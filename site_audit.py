@@ -30,16 +30,17 @@ from typing import List, Optional
 USER_AGENT = "AutomatonSiteAudit/1.0 (+AI agent audit; contact: automaton-revenue@agentmail.to)"
 
 TITLE_RE = re.compile(r"<title[^>]*>(.*?)</title>", re.I | re.S)
-DESC_RE = re.compile(r'<meta[^>]+name=["\']description["\'][^>]*>', re.I)
-VIEWPORT_RE = re.compile(r'<meta[^>]+name=["\']viewport["\'][^>]*>', re.I)
+# Attribute values may be unquoted in valid (often minified) HTML5: name=viewport, lang=en.
+DESC_RE = re.compile(r'<meta[^>]+name\s*=\s*["\']?description["\'\s>/][^>]*>?', re.I)
+VIEWPORT_RE = re.compile(r'<meta[^>]+name\s*=\s*["\']?viewport["\'\s>/]', re.I)
 H1_RE = re.compile(r"<h1[\s>]", re.I)
 IMG_RE = re.compile(r"<img\b[^>]*>", re.I)
-ALT_RE = re.compile(r'alt\s*=\s*["\'][^"\']+["\']', re.I)
+ALT_RE = re.compile(r'\balt\s*=\s*(["\'][^"\']+["\']|[^\s"\'>]+)', re.I)
 LDJSON_RE = re.compile(r'application/ld\+json', re.I)
-CANONICAL_RE = re.compile(r'<link[^>]+rel=["\']canonical["\'][^>]*>', re.I)
-HTTP_RES_RE = re.compile(r"""(src|href)\s*=\s*["']http://[^"']+["']""", re.I)
-LANG_RE = re.compile(r"<html[^>]*\blang\s*=\s*[\"'][^\"']+[\"']", re.I)
-OG_RE = re.compile(r'<meta[^>]+property=["\']og:', re.I)
+CANONICAL_RE = re.compile(r'<link[^>]+rel\s*=\s*["\']?canonical["\'\s>/]', re.I)
+HTTP_RES_RE = re.compile(r"""(src|href)\s*=\s*["']?http://[^"'\s>]+""", re.I)
+LANG_RE = re.compile(r"""<html[^>]*\blang\s*=\s*(["'][^"']+["']|[^\s"'>]+)""", re.I)
+OG_RE = re.compile(r'<meta[^>]+property\s*=\s*["\']?og:', re.I)
 
 
 @dataclass
@@ -145,8 +146,8 @@ def audit_url(url: str, timeout: int = 10) -> AuditResult:
         dm = DESC_RE.search(html)
         desc = ""
         if dm:
-            cm = re.search(r'content\s*=\s*["\']([^"\']*)["\']', dm.group(0), re.I)
-            desc = cm.group(1) if cm else ""
+            cm = re.search(r'content\s*=\s*(?:"([^"]*)"|\'([^\']*)\'|([^\s"\'>]+))', dm.group(0), re.I)
+            desc = (cm.group(1) or cm.group(2) or cm.group(3) or "") if cm else ""
         ok = 50 <= len(desc) <= 160
         res.add("meta description", ok, f"{len(desc)} chars", "medium",
                 "Missing or poorly-sized meta description (50-160 chars). Google often "
