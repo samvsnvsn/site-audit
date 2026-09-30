@@ -76,3 +76,8 @@ The tests serve fixture pages on localhost, so no internet access is required.
 - `email-templates.md` — the outreach email templates (free audit + paid report)
 - `leads_sample.csv` — format of the CRM lead list used for outreach
 - `DISTRIBUTION.md` — where this was published and how it is distributed
+## Extended checks (v1 + v2)
+The audit chain appends two stdlib modules after the core report:
+- `audit_extras.py` - on-page SEO/accessibility: title, meta description, viewport, h1 count, missing img alt, canonical, mixed-content refs.
+- `extras_v2.py` - hardening + crawlability + social: HSTS/CSP/XCTO/XFO/Referrer-Policy headers, robots.txt, sitemap.xml, favicon.ico, Open Graph/twitter:card tags. 404-tolerant: missing files report MISSING, never kill the audit.
+Run offline tests: `py -3 -m unittest test_extras -v` (spawns a local fixture server).
