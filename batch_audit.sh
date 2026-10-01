@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # batch_audit.sh [limit] — real site audits on top-scored auditable leads (zero inference).
 # Chains: site_audit.py (core) + audit_extras.py (tags) + extras_v2.py (headers/robots/social).
-# Regenerates audit_queue.txt ONLY if absent; always normalizes missing schemes.
+     && py -3 extras_v3.py --url "$site" >> "audits/$id.txt" 2>/dev/null# Regenerates audit_queue.txt ONLY if absent; always normalizes missing schemes.
 set -uo pipefail; cd "$(dirname "$0")"
 LIMIT="${1:-15}"; mkdir -p audits
 if [ ! -s audit_queue.txt ]; then

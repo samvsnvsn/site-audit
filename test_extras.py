@@ -101,3 +101,34 @@ class TestExtrasV2(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def v3_out(url):
+    import extras_v3
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        extras_v3.main(url)
+    return buf.getvalue()
+
+
+class TestExtrasV3(unittest.TestCase):
+    def test_perf_metrics_present(self):
+        out = v3_out(BASE_FULL + "/index.html")
+        self.assertIn("load time:", out)
+        self.assertIn("html size:", out)
+        self.assertIn("compression:", out)
+        self.assertIn("cache-control:", out)
+
+    def test_link_sampling(self):
+        out = v3_out(BASE_FULL + "/index.html")
+        self.assertIn("link health (sampled", out)
+        self.assertIn("broken links found:", out)
+
+    def test_no_crash_on_unreachable_page(self):
+        # a 404 page must not crash the module
+        try:
+            out = v3_out(BASE_FULL + "/nonexistent-page-xyz.html")
+            ok = True
+        except Exception:
+            ok = False
+        self.assertTrue(ok)

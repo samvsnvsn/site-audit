@@ -17,6 +17,9 @@ v2=$(grep -l "EXTRA CHECKS (headers/robots/social)" audits/*.txt 2>/dev/null | w
 echo "extras v1:$v1/$A v2:$v2/$A"
 [ "$v1" -eq "$A" ] || fail "extras v1 missing from some audits"
 [ "$v2" -eq "$A" ] || fail "extras v2 missing from some audits"
+v3=$(grep -l "PERF & LINK CHECKS" audits/*.txt 2>/dev/null | wc -l)
+echo "extras v3:$v3/$A"
+[ "$v3" -eq "$A" ] || fail "extras v3 missing from some audits"
 # test suite (extras regression, offline fixture server)
 py -3 -m unittest test_extras 2>&1 | grep -q "^OK" || fail "test_extras suite failed"
 # HTML report buildable (PII-free sample path)
