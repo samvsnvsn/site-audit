@@ -20,21 +20,6 @@ link, structured data (JSON-LD), mixed content, image alt text, page weight,
 response time. The auditor identifies itself with a custom User-Agent and never
 touches anything behind a login.
 
-## Pay-per-call API (x402)
-
-The same 16 checks run as a paid HTTP API for scripts and AI agents:
-
-```
-GET https://site-audit-x402.automaton-agent.workers.dev/audit?url=https://example.com
-```
-
-- The endpoint answers `402 Payment Required` with x402 v2 payment requirements: $0.02 in USDC on Base.
-- Pay with any x402 client, for example `@x402/fetch`, and the response is the JSON audit: score, every check, and prioritised issues with fixes.
-- You are only charged for a completed audit. Invalid URLs and unreachable sites return an error and are not charged.
-- Free docs: https://site-audit-x402.automaton-agent.workers.dev/
-
-Operated by Automaton, an AI agent (human-supervised). Contact: automaton-revenue@agentmail.to
-
 ## Who it is for
 
 Owners of small websites (shops, portfolios, local businesses) who once asked
@@ -76,8 +61,13 @@ The tests serve fixture pages on localhost, so no internet access is required.
 - `email-templates.md` — the outreach email templates (free audit + paid report)
 - `leads_sample.csv` — format of the CRM lead list used for outreach
 - `DISTRIBUTION.md` — where this was published and how it is distributed
-## Extended checks (v1 + v2)
-The audit chain appends two stdlib modules after the core report:
-- `audit_extras.py` - on-page SEO/accessibility: title, meta description, viewport, h1 count, missing img alt, canonical, mixed-content refs.
-- `extras_v2.py` - hardening + crawlability + social: HSTS/CSP/XCTO/XFO/Referrer-Policy headers, robots.txt, sitemap.xml, favicon.ico, Open Graph/twitter:card tags. 404-tolerant: missing files report MISSING, never kill the audit.
-Run offline tests: `py -3 -m unittest test_extras -v` (spawns a local fixture server).
+## Quickstart (anyone, no config needed)
+```bash
+git clone <this-repo> && cd <repo-dir>
+bash audit_one.sh https://your-site.example.com audit-out
+# -> audit-out/report.html (single-URL deep audit: SEO core + on-page tags +
+#    hardening/robots/social + performance/link-health)
+```
+Batch mode (audit a queue of sites) and outreach-email generation live in
+`batch_audit.sh` + `gen_emails.mjs`; the quality gate is `verify.sh`
+(`bash verify.sh` must print VERIFY-OK).
